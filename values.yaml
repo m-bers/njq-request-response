@@ -1,0 +1,55 @@
+controller:
+  nginxplus: true
+  image:
+    repository: private-registry.nginx.com/nginx-ic/nginx-plus-ingress
+    tag: "2.4.2"
+  serviceAccount:
+    imagePullSecretName: regcred
+  enableSnippets: true
+  config:
+    entries:
+      main-snippets: |
+        load_module modules/ngx_http_js_module.so;
+ 
+      http-snippets: |
+        js_path "/etc/nginx/njs/";
+ 
+        js_import rrb from request-response.js;
+ 
+        js_set $responseBody rrb.getResponseBody;
+        js_set $requestBody rrb.getRequestBody;
+ 
+        log_format access_request $requestBody;
+        log_format access_response $responseBody;
+ 
+      log-format-escaping: json     
+      log-format: |
+        {
+          "request_id": "$request_id",
+          "request_body": "$requestBody",
+          "response_body": "$responseBody",
+          "remote_addr": "$remote_addr",
+          "remote_user": "$remote_user",
+          "time_local": "$time_local",
+          "request": "$request",
+          "status": "$status",
+          "grpc_status": "$grpc_status",
+          "body_bytes_sent": "$body_bytes_sent",
+          "http_referer": "$http_referer",
+          "http_user_agent": "$http_user_agent",
+          "http_x_forwarded_for": "$http_x_forwarded_for",
+          "resource_name": "$resource_name",
+          "resource_type": "$resource_type",
+          "resource_namespace": "$resource_namespace",
+          "service": "$service"
+        }
+ 
+  volumes:
+  - name: request-response
+    configMap:
+      name: request-response
+ 
+  volumeMounts:
+  - name: request-response
+    mountPath: /etc/nginx/njs/request-response.js
+    subPath: request-response.js

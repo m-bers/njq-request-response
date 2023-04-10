@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: request-response
+  namespace: nginx-ingress
+data:
+  request-response.js: |
+    var requestBody = '';
+    var responseBody = '';
+ 
+    function getRequestBody(r) {
+        requestBody += r.requestBuffer;
+        return requestBody;
+    }
+ 
+    function getResponseBody(r, data, flags) {
+        responseBody += data;
+        r.sendBuffer(data, flags);
+        return responseBody;
+    }
+
+    export default { getRequestBody, getResponseBody };

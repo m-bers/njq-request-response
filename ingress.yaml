@@ -1,0 +1,10 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.org/location-snippets: |
+      js_body_filter rrb.getResponseBody;
+# ...
+spec:
+  rules:
+# ...

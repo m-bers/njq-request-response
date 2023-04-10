@@ -1,0 +1,19 @@
+{
+  "request_id": "7d41f2a3d09cf1d5358eecd9b7d71ffd",
+  "request_body": "{\"login\":\"my_login\",\"password\":\"my_password\"}",
+  "response_body": "Server address: 10.42.0.16:8080\nServer name: coffee-9bf875848-75gg2\nDate: 02/Dec/2022:03:47:12 +0000\nURI: /coffee\nRequest ID: 0d53ebddf40d69748b675e9f6fcdca0d\nundefined",
+  "remote_addr": "10.42.0.9",
+  "remote_user": "",
+  "time_local": "02/Dec/2022:03:47:12 +0000",
+  "request": "POST /coffee HTTP/1.1",
+  "status": "200",
+  "grpc_status": "",
+  "body_bytes_sent": "159",
+  "http_referer": "",
+  "http_user_agent": "curl/7.79.1",
+  "http_x_forwarded_for": "",
+  "resource_name": "cafe-ingress",
+  "resource_type": "ingress",
+  "resource_namespace": "default",
+  "service": "coffee-svc"
+}
